@@ -7,6 +7,26 @@ type TableProps = {
 };
 
 const Table = ({ data, handleRestart }: TableProps) => {
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="h-screen w-screen flex flex-col items-center justify-center">
+        <div className="custom-loader"></div>
+
+        <p className="mt-2">Table is loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1 className="text-center">Congratulations! You have completed</h1>

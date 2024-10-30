@@ -1,23 +1,19 @@
 import { Fetcher } from "@/lib/fetcher";
-import React from "react";
+import React, { Suspense } from "react";
 import QuestionsContent, { DataType } from "./content";
 
-const QuestionsPage = async ({
-  searchParams,
-}: {
-  searchParams: { disableTimer: boolean };
-}) => {
+const QuestionsPage = async () => {
   const [questions] = await Promise.all([
     Fetcher({ fetchType: "questions", fetchName: "posts" }) as Promise<
       DataType[]
     >,
   ]);
 
-  const { disableTimer } = await searchParams;
-
   return (
     <div className="w-screen h-screen">
-      <QuestionsContent data={questions} disableTimer={disableTimer} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <QuestionsContent data={questions} />
+      </Suspense>
     </div>
   );
 };

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "./_components/table";
 import Question from "./_components/question";
+import { useSearchParams } from "next/navigation";
 
 export type DataType = {
   userId: number;
@@ -12,10 +13,11 @@ export type DataType = {
 
 type QuestionsContentProps = {
   data: DataType[];
-  disableTimer: boolean;
 };
 
-const QuestionsContent = ({ data, disableTimer }: QuestionsContentProps) => {
+const QuestionsContent = ({ data }: QuestionsContentProps) => {
+  const disableTimer = useSearchParams().get("disableTimer") === "true";
+
   const [answers, setAnswers] = useState<
     { questionId: number; answer: string }[]
   >([]);
